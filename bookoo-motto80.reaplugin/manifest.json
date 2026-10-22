@@ -1,0 +1,31 @@
+{
+  "id": "bookoo-motto80.reaplugin",
+  "name": "BooKoo Motto 80 Grinder",
+  "author": "Roy Ackerman",
+  "description": "Motto 80 burr-gap observations, RPM control and device settings over Bluetooth. Requires firmware v1.2.19.0820 or later. Physical grind adjustment is manual.",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "permissions": ["transport.ble", "log", "api"],
+  "drivers": [{
+    "id": "motto80",
+    "type": "grinder",
+    "capabilities": ["rpmControl"],
+    "observations": ["setting", "rpm"],
+    "controls": {"rpmControl": {"kind": "numeric", "min": 500, "max": 1500, "step": 10}},
+    "ble": {"match": {"name": {"prefix": "BOOKOO MT80 "}}},
+    "surfaces": [{"id": "settings", "role": "settings", "endpoint": "device-settings", "label": "Motto 80 settings"}]
+  }],
+  "settings": {
+    "PacketTimeoutMs": {
+      "type": "number",
+      "label": "Grinder notification timeout (milliseconds)",
+      "description": "Reports a silent data channel to Decaid. Default 5000; integer 1000 to 10000. The grinder normally reports five times per second.",
+      "default": 5000
+    }
+  },
+  "api": [
+    {"id": "device-settings", "type": "http", "data": {}},
+    {"id": "status", "type": "http", "data": {}},
+    {"id": "configure", "type": "http", "data": {}}
+  ]
+}
